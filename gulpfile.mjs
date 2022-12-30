@@ -7,8 +7,10 @@ import { deleteSync } from 'del';
 import browserSync from 'browser-sync';
 
 
+const distDirectory = './docs';
+
 export const clean = done => {
-  deleteSync('./dist');
+  deleteSync(distDirectory);
   done();
 };
 
@@ -20,17 +22,17 @@ export const buildEjs = () => {
     .src('./src/index.ejs')
     .pipe(ejs( {sketches: sketches} ))
     .pipe(rename({ extname: '.html' }))
-    .pipe(gulp.dest('./dist'));
+    .pipe(gulp.dest(distDirectory));
 };
 
 export const copySketches = () => {
   return gulp.src(['./src/sketches/**/*'])
-    .pipe(gulp.dest('./dist'));
+    .pipe(gulp.dest(distDirectory));
 };
 
 const browserSyncFunc = () => {
   browserSync.init({
-    server: './dist',
+    server: distDirectory,
   });
 };
 
