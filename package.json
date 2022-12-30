@@ -10,7 +10,7 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "browser-sync": "^2.27.11",
     "commander": "^9.4.1",
     "del": "^7.0.0",
