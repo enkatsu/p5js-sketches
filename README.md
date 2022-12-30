@@ -12,8 +12,8 @@ npm i
 npm start
 ```
 
-## Make sketch
+## Add sketch
 
 ```bash
-node commands.mjs sketch:make -t sketch-title
+node commands.mjs sketch:add -t sketch-title
 ```

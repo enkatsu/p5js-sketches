@@ -2,11 +2,11 @@ import ejs from 'ejs';
 import { program } from 'commander';
 import fs from 'fs';
 
-program.command('sketch:make')
+program.command('sketch:add')
   .requiredOption('-t, --title <title>')
-  .description('make sketch from template')
+  .description('add sketch')
   .action(async args => {
-    console.log('run sketch:make command');
+    console.log('run sketch:add command');
     const html = await ejs.renderFile('./template/index.ejs', args);
     fs.mkdirSync(`./src/sketches/${args.title}`);
     fs.writeFileSync(`./src/sketches/${args.title}/index.html`, html);
