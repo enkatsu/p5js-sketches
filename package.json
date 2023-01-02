@@ -1,0 +1,28 @@
+{
+  "name": "p5js-garally-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "gulp",
+    "build": "gulp build"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.27.11",
+    "commander": "^9.4.1",
+    "del": "^7.0.0",
+    "ejs": "^3.1.8",
+    "esm": "^3.2.25",
+    "glob": "^8.0.3",
+    "gulp": "^4.0.2",
+    "gulp-ejs": "^5.1.0",
+    "gulp-html-beautify": "^1.0.1",
+    "gulp-notify": "^4.0.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-rename": "^2.0.0"
+  }
+}
