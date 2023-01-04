@@ -5,6 +5,7 @@ import path from 'path';
 import rename from 'gulp-rename';
 import { deleteSync } from 'del';
 import browserSync from 'browser-sync';
+import fs from 'fs';
 
 
 const distDirectory = './docs';
@@ -13,13 +14,26 @@ export const clean = async () => {
   deleteSync(distDirectory);
 };
 
+export const copyAssets = async () => {
+  return gulp
+    .src('./src/assets/**/*')
+    .pipe(gulp.dest(distDirectory + '/assets'));
+};
+
 export const buildEjs = () => {
   const sketches = glob.sync('./src/sketches/*')
-    .map(sketch => path.posix.basename(sketch));
+    .map(sketch => {
+      const title = path.posix.basename(sketch);
+      const thumbnailPath = fs.existsSync(`${sketch}/thumbnail.png`) ?
+        `./${title}/thumbnail.png`:
+        './assets/images/noimage-thumbnail.png'
+      return { title, thumbnailPath, };
+    });
+  console.info(sketches);
   return gulp
     .src('./src/index.ejs')
-    .pipe(ejs( {sketches: sketches} ))
-    .pipe(rename({ extname: '.html' }))
+    .pipe(ejs({ sketches: sketches, }))
+    .pipe(rename({ extname: '.html', }))
     .pipe(gulp.dest(distDirectory));
 };
 
@@ -50,12 +64,16 @@ export const build = gulp.series(
   gulp.parallel(
     buildEjs,
     copySketches,
+    copyAssets,
   )
 );
 
-export default gulp.series(
+export const dev = gulp.series(
   clean,
   buildEjs,
   copySketches,
+  copyAssets,
   gulp.parallel(watchFiles, browserSyncFunc)
 );
+
+export default dev;
