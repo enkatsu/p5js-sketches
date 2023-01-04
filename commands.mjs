@@ -6,13 +6,20 @@ program.command('sketch:add')
   .requiredOption('-t, --title <title>')
   .description('add sketch')
   .action(async args => {
+    const sketchPath = `./src/sketches/${args.title}`;
+
+    if (fs.existsSync(sketchPath)) {
+      console.error(`${sketchPath} is exist`);
+      return;
+    }
+
     console.log('run sketch:add command');
     const html = await ejs.renderFile('./template/index.ejs', args);
-    fs.mkdirSync(`./src/sketches/${args.title}`);
-    fs.writeFileSync(`./src/sketches/${args.title}/index.html`, html);
-    console.log(`make: ./src/sketches/${args.title}/index.html`);
-    fs.copyFileSync('./template/sketch.js', `./src/sketches/${args.title}/sketch.js`);
-    console.log(`make: ./src/sketches/${args.title}/sketch.js`);
+    fs.mkdirSync(sketchPath);
+    fs.writeFileSync(`${sketchPath}/index.html`, html);
+    console.log(`make: ${sketchPath}/index.html`);
+    fs.copyFileSync('./template/sketch.js', `${sketchPath}/sketch.js`);
+    console.log(`make: ${sketchPath}/sketch.js`);
   })
 
 program.parse(process.argv)
